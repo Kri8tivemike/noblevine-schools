@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Noble Vine Schools — God is with Us</title>
+  <meta name="description" content="Noble Vine Schools, Lagos — Nursery, Primary and College. Academic excellence, moral fortitude, and future-ready learning since 2006." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { DEFAULT: '#1E3A8A', deep: '#00236F', dark: '#0F172A' },
+            bright: '#2563EB',
+            gold: { DEFAULT: '#F59E0B', deep: '#EA580C' },
+            mist: '#F8FAFC',
+            line: '#E2E8F0'
+          },
+          fontFamily: {
+            display: ['"EB Garamond"', 'Georgia', 'serif'],
+            sans: ['Manrope', 'system-ui', 'sans-serif']
+          },
+          maxWidth: { content: '80rem' },
+          boxShadow: {
+            card: '0 1px 3px 0 rgba(15,23,42,.04), 0 1px 2px -1px rgba(15,23,42,.04)',
+            lift: '0 10px 15px -3px rgba(30,58,138,.08), 0 4px 6px -4px rgba(30,58,138,.04)'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: Manrope, system-ui, sans-serif; color: #0F172A; background: #fff; }
+    .font-display { font-family: "EB Garamond", Georgia, serif; letter-spacing: -0.01em; }
+    .hero-shell {
+      background: #000;
+    }
+    .hero-slider {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center 42%;
+      background-repeat: no-repeat;
+      opacity: 0;
+      transform: scale(1.04);
+      transition: opacity 1.15s ease-in-out, transform 7s ease-out;
+      will-change: opacity, transform;
+    }
+    .hero-slide.is-active {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 1;
+    }
+    .hero-slide[data-pos="left"] { background-position: center 40%; }
+    .hero-slide[data-pos="courtyard"] { background-position: 58% center; }
+    .hero-slide[data-pos="assembly"] { background-position: center 35%; }
+    /* Soft global wash — photo stays visible; only gentle contrast */
+    .hero-scrim {
+      z-index: 2;
+      background:
+        linear-gradient(
+          100deg,
+          rgba(0, 0, 0, 0.62) 0%,
+          rgba(0, 0, 0, 0.38) 34%,
+          rgba(0, 0, 0, 0.12) 58%,
+          transparent 78%
+        ),
+        linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.28) 0%,
+          transparent 34%,
+          transparent 55%,
+          rgba(0, 0, 0, 0.5) 100%
+        );
+    }
+    .hero-controls {
+      z-index: 4;
+    }
+    .hero-dot {
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 9999px;
+      background: rgba(255,255,255,.45);
+      border: 0;
+      transition: width .25s ease, background .25s ease;
+    }
+    .hero-dot.is-active {
+      width: 1.55rem;
+      background: #F59E0B;
+    }
+    .hero-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,.35);
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      transition: background .2s ease, border-color .2s ease;
+    }
+    .hero-nav-btn:hover {
+      background: rgba(0, 0, 0, 0.65);
+      border-color: rgba(245, 158, 11, .7);
+    }
+    /* Local readability veil behind copy only — fades into the photo */
+    .hero-copy {
+      position: relative;
+      isolation: isolate;
+      text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.55),
+        0 8px 28px rgba(0, 0, 0, 0.4);
+    }
+    .hero-copy::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: -1.25rem -2rem -1.5rem -1.5rem;
+      border-radius: 1rem;
+      background:
+        radial-gradient(
+          120% 90% at 18% 40%,
+          rgba(0, 0, 0, 0.7) 0%,
+          rgba(0, 0, 0, 0.4) 42%,
+          rgba(0, 0, 0, 0.12) 68%,
+          transparent 82%
+        );
+      pointer-events: none;
+    }
+    @media (max-width: 768px) {
+      .hero-slide,
+      .hero-slide[data-pos="left"],
+      .hero-slide[data-pos="courtyard"],
+      .hero-slide[data-pos="assembly"] {
+        background-position: center 35%;
+      }
+      .hero-scrim {
+        background:
+          linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.35) 0%,
+            rgba(0, 0, 0, 0.48) 40%,
+            rgba(0, 0, 0, 0.72) 100%
+          );
+      }
+      .hero-copy::before {
+        inset: -1rem -0.75rem -1.25rem -0.75rem;
+        background:
+          radial-gradient(
+            100% 90% at 50% 40%,
+            rgba(0, 0, 0, 0.68) 0%,
+            rgba(0, 0, 0, 0.32) 55%,
+            transparent 80%
+          );
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-slide {
+        transition: opacity .35s ease;
+        transform: none !important;
+      }
+      .hero-slide.is-active { transform: none; }
+      .utility-marquee-track { animation: none !important; }
+    }
+
+    /* Mobile utility bar — infinite horizontal scroller */
+    .utility-desktop { display: flex; }
+    .utility-mobile { display: none; }
+    .utility-marquee {
+      overflow: hidden;
+      white-space: nowrap;
+      mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    }
+    .utility-marquee-track {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.75rem;
+      width: max-content;
+      animation: utility-scroll 28s linear infinite;
+    }
+    .utility-marquee:hover .utility-marquee-track { animation-play-state: paused; }
+    .utility-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+    .utility-sep {
+      width: 0.25rem;
+      height: 0.25rem;
+      border-radius: 9999px;
+      background: rgba(245, 158, 11, 0.7);
+      flex-shrink: 0;
+    }
+    @keyframes utility-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* Stats: desktop grid / mobile carousel */
+    .stats-desktop { display: grid; }
+    .stats-mobile { display: none; }
+    .stats-carousel {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 0.25rem;
+      scrollbar-width: none;
+    }
+    .stats-carousel::-webkit-scrollbar { display: none; }
+    .stats-card {
+      flex: 0 0 min(78%, 17.5rem);
+      scroll-snap-align: start;
+    }
+    @media (max-width: 767px) {
+      .utility-desktop { display: none; }
+      .utility-mobile { display: block; }
+      .stats-desktop { display: none; }
+      .stats-mobile { display: block; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.is-visible { opacity: 1; transform: none; }
+    .gallery-item { transition: opacity .25s ease, transform .25s ease; }
+    .gallery-item.is-hidden { opacity: 0; transform: scale(.96); pointer-events: none; position: absolute; width: 0; height: 0; overflow: hidden; }
+
+    /* Compact single-line gallery filter rail */
+    .gallery-filters {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 0.4rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x proximity;
+      scrollbar-width: none;
+      padding: 0.15rem 0.1rem 0.35rem;
+      margin-inline: -0.15rem;
+      mask-image: linear-gradient(90deg, transparent, #000 3%, #000 92%, transparent);
+    }
+    .gallery-filters::-webkit-scrollbar { display: none; }
+    .gallery-filter {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 2rem;
+      padding: 0 0.85rem;
+      border-radius: 9999px;
+      border: 1px solid #E2E8F0;
+      background: #fff;
+      color: #334155;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+    .gallery-filter:hover {
+      border-color: rgba(0, 35, 111, 0.35);
+      color: #00236F;
+    }
+    .gallery-filter.is-active {
+      background: #00236F;
+      border-color: #00236F;
+      color: #fff;
+      box-shadow: 0 6px 14px -8px rgba(0, 35, 111, 0.65);
+    }
+    .gallery-filter:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(37, 99, 235, 0.45);
+    }
+
+    /* Footer accordion (collapsed by default on mobile) */
+    .footer-acc {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .footer-acc-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.95rem 0;
+      background: transparent;
+      border: 0;
+      color: #F59E0B;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-align: left;
+      cursor: pointer;
+    }
+    .footer-acc-btn:focus-visible {
+      outline: 2px solid rgba(245, 158, 11, 0.55);
+      outline-offset: 3px;
+      border-radius: 0.25rem;
+    }
+    .footer-acc-icon {
+      width: 1rem;
+      height: 1rem;
+      flex-shrink: 0;
+      color: rgba(255, 255, 255, 0.55);
+      transition: transform .28s cubic-bezier(.22, 1, .36, 1), color .2s ease;
+    }
+    .footer-acc.is-open .footer-acc-icon {
+      transform: rotate(180deg);
+      color: #F59E0B;
+    }
+    .footer-acc-panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows .32s cubic-bezier(.22, 1, .36, 1);
+    }
+    .footer-acc.is-open .footer-acc-panel {
+      grid-template-rows: 1fr;
+    }
+    .footer-acc-panel > ul {
+      overflow: hidden;
+      min-height: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      font-size: 0.875rem;
+    }
+    .footer-acc.is-open .footer-acc-panel > ul {
+      padding: 0 0 0.95rem;
+    }
+    @media (min-width: 768px) {
+      .footer-acc {
+        border-bottom: 0;
+      }
+      .footer-acc-btn {
+        pointer-events: none;
+        padding: 0;
+        cursor: default;
+      }
+      .footer-acc-icon {
+        display: none;
+      }
+      .footer-acc-panel {
+        grid-template-rows: 1fr;
+      }
+      .footer-acc.is-open .footer-acc-panel > ul,
+      .footer-acc-panel > ul {
+        padding: 1rem 0 0;
+        gap: 0.5rem;
+      }
+    }
+    /* Modern borderless menu toggle */
+    .menu-toggle {
+      position: relative;
+      width: 2.75rem;
+      height: 2.75rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      background: transparent;
+      color: #0F172A;
+      border-radius: 0.75rem;
+      transition: background .2s ease, color .2s ease;
+    }
+    .menu-toggle:hover,
+    .menu-toggle:focus-visible {
+      background: rgba(15, 23, 42, 0.05);
+      outline: none;
+    }
+    .menu-toggle:focus-visible {
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.35);
+    }
+    .menu-bars {
+      position: relative;
+      width: 1.35rem;
+      height: 0.9rem;
+      display: block;
+    }
+    .menu-bars span {
+      position: absolute;
+      left: 0;
+      height: 2px;
+      border-radius: 9999px;
+      background: currentColor;
+      transition:
+        transform .28s cubic-bezier(.22, 1, .36, 1),
+        width .28s cubic-bezier(.22, 1, .36, 1),
+        opacity .2s ease,
+        top .28s cubic-bezier(.22, 1, .36, 1);
+    }
+    .menu-bars span:nth-child(1) { top: 0; width: 100%; }
+    .menu-bars span:nth-child(2) { top: 50%; width: 68%; transform: translateY(-50%); }
+    .menu-bars span:nth-child(3) { bottom: 0; width: 84%; }
+    .menu-toggle[aria-expanded="true"] {
+      color: #00236F;
+    }
+    .menu-toggle[aria-expanded="true"] .menu-bars span:nth-child(1) {
+      top: 50%;
+      width: 100%;
+      transform: translateY(-50%) rotate(45deg);
+    }
+    .menu-toggle[aria-expanded="true"] .menu-bars span:nth-child(2) {
+      opacity: 0;
+      width: 0;
+    }
+    .menu-toggle[aria-expanded="true"] .menu-bars span:nth-child(3) {
+      top: 50%;
+      bottom: auto;
+      width: 100%;
+      transform: translateY(-50%) rotate(-45deg);
+    }
+
+    /* Mobile drawer */
+    .mobile-drawer {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      border-top: 1px solid transparent;
+      background: linear-gradient(180deg, #fff 0%, #F8FAFC 100%);
+      transition:
+        max-height .38s cubic-bezier(.22, 1, .36, 1),
+        opacity .28s ease,
+        border-color .2s ease;
+    }
+    .mobile-drawer.is-open {
+      max-height: 28rem;
+      opacity: 1;
+      border-color: #E2E8F0;
+      box-shadow: 0 18px 40px -24px rgba(15, 23, 42, 0.35);
+    }
+    .mobile-drawer[hidden] {
+      display: none !important;
+    }
+    .mobile-drawer-inner {
+      padding: 0.75rem 1rem 1.25rem;
+    }
+    .mobile-nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.9rem 0.85rem;
+      border-radius: 0.85rem;
+      color: #0F172A;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      transition: background .2s ease, color .2s ease, transform .2s ease;
+    }
+    .mobile-nav-link:hover,
+    .mobile-nav-link:focus-visible {
+      background: rgba(0, 35, 111, 0.06);
+      color: #00236F;
+      outline: none;
+    }
+    .mobile-nav-link .nav-meta {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #94A3B8;
+    }
+    .mobile-nav-link svg {
+      width: 1rem;
+      height: 1rem;
+      color: #94A3B8;
+      transition: transform .2s ease, color .2s ease;
+    }
+    .mobile-nav-link:hover svg {
+      color: #F59E0B;
+      transform: translateX(2px);
+    }
+    .mobile-drawer-actions {
+      display: grid;
+      gap: 0.65rem;
+      margin-top: 0.85rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid #E2E8F0;
+    }
+    .mobile-cta-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.85rem;
+      background: #F59E0B;
+      color: #0F172A;
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 0.9rem 1rem;
+      text-decoration: none;
+      transition: background .2s ease, transform .2s ease;
+    }
+    .mobile-cta-primary:hover {
+      background: #EA580C;
+      color: #fff;
+    }
+    .mobile-cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.85rem;
+      border: 1px solid #E2E8F0;
+      background: #fff;
+      color: #00236F;
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 0.8rem 1rem;
+      text-decoration: none;
+      transition: border-color .2s ease, background .2s ease;
+    }
+    .mobile-cta-secondary:hover {
+      border-color: #00236F;
+      background: rgba(0, 35, 111, 0.04);
+    }
+
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: "";
+      position: absolute; left: 0; right: 0; bottom: -6px; height: 2px;
+      background: #2563EB; transform: scaleX(0); transform-origin: left;
+      transition: transform .25s ease;
+    }
+    .nav-link:hover::after, .nav-link[aria-current="page"]::after { transform: scaleX(1); }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
+</head>
+<body class="antialiased">
+  <!-- Utility bar -->
+  <div class="bg-navy-deep text-white/90 text-xs md:text-sm">
+    <div class="utility-desktop mx-auto max-w-content px-4 md:px-8 lg:px-16 py-2.5 items-center justify-between gap-3">
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-1">
+        <span>39/4 Solo Ogun Street off Oladimeji, Lagos</span>
+        <a class="hover:text-gold transition" href="tel:+2348060654433">0806 065 4433</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center gap-2 rounded-full bg-gold/15 text-gold px-3 py-1 font-semibold tracking-wide uppercase text-[11px]">
+          <span class="h-1.5 w-1.5 rounded-full bg-gold animate-pulse"></span>
+          Admissions Open 2025/2026
+        </span>
+      </div>
+    </div>
+    <div class="utility-mobile py-2.5" aria-label="Contact and admissions ticker">
+      <div class="utility-marquee">
+        <div class="utility-marquee-track">
+          <span class="utility-chip">39/4 Solo Ogun Street off Oladimeji, Lagos</span>
+          <span class="utility-sep" aria-hidden="true"></span>
+          <a class="utility-chip hover:text-gold transition" href="tel:+2348060654433">0806 065 4433</a>
+          <span class="utility-sep" aria-hidden="true"></span>
+          <span class="utility-chip rounded-full bg-gold/15 text-gold px-3 py-1 font-semibold tracking-wide uppercase text-[11px]">
+            <span class="h-1.5 w-1.5 rounded-full bg-gold animate-pulse"></span>
+            Admissions Open 2025/2026
+          </span>
+          <span class="utility-sep" aria-hidden="true"></span>
+          <span class="utility-chip">39/4 Solo Ogun Street off Oladimeji, Lagos</span>
+          <span class="utility-sep" aria-hidden="true"></span>
+          <a class="utility-chip hover:text-gold transition" href="tel:+2348060654433">0806 065 4433</a>
+          <span class="utility-sep" aria-hidden="true"></span>
+          <span class="utility-chip rounded-full bg-gold/15 text-gold px-3 py-1 font-semibold tracking-wide uppercase text-[11px]">
+            <span class="h-1.5 w-1.5 rounded-full bg-gold animate-pulse"></span>
+            Admissions Open 2025/2026
+          </span>
+          <span class="utility-sep" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main nav -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-line">
+    <div class="mx-auto max-w-content px-4 md:px-8 lg:px-16 h-[4.5rem] flex items-center justify-between gap-4">
+      <a href="#top" class="flex items-center shrink-0" aria-label="Noble Vine Schools home">
+        <img src="assets/logo.jpg" alt="Noble Vine Schools" class="h-12 md:h-14 w-auto object-contain" />
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-700" aria-label="Primary">
+        <a class="nav-link" href="#top" aria-current="page">Home</a>
+        <a class="nav-link" href="#why">About</a>
+        <a class="nav-link" href="#divisions">Academics</a>
+        <a class="nav-link" href="#portals">Portals</a>
+        <a class="nav-link" href="#news">News</a>
+        <a class="nav-link" href="#contact">Contact</a>
+      </nav>
+
+      <div class="hidden md:flex items-center gap-3">
+        <a href="#portals" class="text-sm font-semibold text-navy hover:text-bright transition">Access Portal</a>
+        <a href="#contact" class="inline-flex items-center rounded bg-gold px-4 py-2.5 text-sm font-extrabold text-navy-dark hover:bg-gold-deep hover:text-white transition -translate-y-0 hover:translate-y-[-1px]">Apply for Admission</a>
+      </div>
+
+      <button id="menuBtn" class="menu-toggle lg:hidden" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+        <span class="menu-bars" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+    </div>
+    <div id="mobileMenu" class="mobile-drawer lg:hidden" hidden aria-hidden="true">
+      <div class="mobile-drawer-inner">
+        <nav class="flex flex-col gap-1" aria-label="Mobile">
+          <a class="mobile-nav-link" href="#top" data-close-menu>
+            <span>Home</span>
+            <span class="nav-meta">01</span>
+          </a>
+          <a class="mobile-nav-link" href="#why" data-close-menu>
+            <span>About</span>
+            <span class="nav-meta">02</span>
+          </a>
+          <a class="mobile-nav-link" href="#divisions" data-close-menu>
+            <span>Academics</span>
+            <span class="nav-meta">03</span>
+          </a>
+          <a class="mobile-nav-link" href="#portals" data-close-menu>
+            <span>Portals</span>
+            <span class="nav-meta">04</span>
+          </a>
+          <a class="mobile-nav-link" href="#news" data-close-menu>
+            <span>News</span>
+            <span class="nav-meta">05</span>
+          </a>
+          <a class="mobile-nav-link" href="#contact" data-close-menu>
+            <span>Contact</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+        </nav>
+        <div class="mobile-drawer-actions">
+          <a href="#contact" data-close-menu class="mobile-cta-primary">Apply for Admission</a>
+          <a href="#portals" data-close-menu class="mobile-cta-secondary">Access Parent / Student Portal</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section id="hero" class="hero-shell relative min-h-[88vh] flex items-end text-white overflow-hidden" aria-roledescription="carousel" aria-label="Campus highlights">
+      <div class="hero-slider" id="heroSlider" aria-live="polite">
+        <div class="hero-slide is-active" data-pos="left" style="background-image:url('assets/gallery/noble-view-school.webp')" role="group" aria-roledescription="slide" aria-label="1 of 3: Campus facade"></div>
+        <div class="hero-slide" data-pos="courtyard" style="background-image:url('assets/gallery/noble-view-courtyard.png')" role="group" aria-roledescription="slide" aria-label="2 of 3: Courtyard view" aria-hidden="true"></div>
+        <div class="hero-slide" data-pos="assembly" style="background-image:url('assets/gallery/noble-assembly.jpg')" role="group" aria-roledescription="slide" aria-label="3 of 3: School assembly" aria-hidden="true"></div>
+      </div>
+      <div class="hero-scrim absolute inset-0" aria-hidden="true"></div>
+
+      <div class="relative z-[3] mx-auto max-w-content w-full px-4 md:px-8 lg:px-16 pt-24 pb-16 md:pb-20">
+        <div class="hero-copy max-w-3xl reveal">
+          <p class="inline-flex items-center gap-2 rounded-full bg-black/55 backdrop-blur-sm border border-white/20 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-gold mb-6">Lagos State Accredited</p>
+          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.08] text-white">
+            Nurturing Global Champions with Academic Excellence &amp; Moral Fortitude.
+          </h1>
+          <p class="mt-5 max-w-2xl text-base md:text-lg text-white/90 leading-relaxed">
+            Since 2006, Noble Vine Schools has shaped confident learners across Nursery, Primary, and College — blending intellectual growth, character, and cultural exposure for a rapidly changing world.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#divisions" class="inline-flex items-center rounded bg-gold px-5 py-3 text-sm font-extrabold text-navy-dark hover:bg-white transition">Explore Academic Programs</a>
+            <a href="#portals" class="inline-flex items-center rounded border border-white/40 px-5 py-3 text-sm font-bold text-white hover:bg-white/10 transition">Parent Portal</a>
+          </div>
+        </div>
+
+        <div class="mt-14 max-w-xl w-full reveal">
+          <div class="stats-desktop sm:grid-cols-3 gap-3">
+            <div class="rounded-xl border border-white/15 bg-white/10 backdrop-blur px-4 py-3.5">
+              <p class="font-display text-2xl md:text-3xl font-semibold text-gold">18+</p>
+              <p class="text-xs md:text-sm text-white/80 mt-1 leading-snug">Years of presence in Lagos</p>
+            </div>
+            <div class="rounded-xl border border-white/15 bg-white/10 backdrop-blur px-4 py-3.5">
+              <p class="font-display text-2xl md:text-3xl font-semibold text-gold">100%</p>
+              <p class="text-xs md:text-sm text-white/80 mt-1 leading-snug">CBT &amp; ICT readiness</p>
+            </div>
+            <div class="rounded-xl border border-white/15 bg-white/10 backdrop-blur px-4 py-3.5">
+              <p class="font-display text-2xl md:text-3xl font-semibold text-gold">1:1</p>
+              <p class="text-xs md:text-sm text-white/80 mt-1 leading-snug">Attentive learning culture</p>
+            </div>
+          </div>
+
+          <div class="stats-mobile" aria-roledescription="carousel" aria-label="School highlights">
+            <div class="stats-carousel" id="statsCarousel">
+              <div class="stats-card rounded-xl border border-white/15 bg-white/10 backdrop-blur px-4 py-3.5" data-stat="0">
+                <p class="font-display text-2xl font-semibold text-gold">18+</p>
+                <p class="text-xs text-white/80 mt-1 leading-snug">Years of presence in Lagos</p>
+              </div>
+              <div class="stats-card rounded-xl border border-white/15 bg-white/10 backdrop-blur px-4 py-3.5" data-stat="1">
+                <p class="font-display text-2xl font-semibold text-gold">100%</p>
+                <p class="text-xs text-white/80 mt-1 leading-snug">CBT &amp; ICT readiness</p>
+              </div>
+              <div class="stats-card rounded-xl border border-white/15 bg-white/10 backdrop-blur px-4 py-3.5" data-stat="2">
+                <p class="font-display text-2xl font-semibold text-gold">1:1</p>
+                <p class="text-xs text-white/80 mt-1 leading-snug">Attentive learning culture</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-controls absolute inset-x-0 bottom-5 z-[4] px-4 md:px-8 lg:px-16">
+        <div class="mx-auto max-w-content flex items-center justify-between gap-4">
+          <div class="flex items-center gap-2" id="heroDots" role="tablist" aria-label="Slide indicators"></div>
+          <div class="flex items-center gap-2">
+            <button type="button" class="hero-nav-btn" id="heroPrev" aria-label="Previous slide">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button type="button" class="hero-nav-btn" id="heroNext" aria-label="Next slide">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portals -->
+    <section id="portals" class="bg-mist py-20 md:py-24">
+      <div class="mx-auto max-w-content px-4 md:px-8 lg:px-16">
+        <div class="max-w-2xl reveal">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-bright">Institutional Gateway</p>
+          <h2 class="font-display text-3xl md:text-4xl font-semibold text-navy mt-3">Noble Vine Institutional Gateway</h2>
+          <p class="mt-3 text-slate-600">One campus family. Three secure portals for students, parents, and staff.</p>
+        </div>
+
+        <div class="mt-10 grid md:grid-cols-3 gap-5">
+          <article class="reveal rounded-xl border border-line bg-white p-6 shadow-card hover:shadow-lift transition">
+            <div class="h-11 w-11 rounded-lg bg-blue-50 text-bright flex items-center justify-center mb-5">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5l8-2 8 2v14l-8 2-8-2Z"/><path d="M12 3v18"/></svg>
+            </div>
+            <h3 class="font-display text-2xl font-semibold text-navy">Student Academic Portal</h3>
+            <p class="mt-2 text-sm text-slate-600">CBT practice, e-learning modules, and continuous assessment tracking.</p>
+            <ul class="mt-4 space-y-2 text-sm text-slate-700">
+              <li>• CBT Practice Hall</li>
+              <li>• Digital lesson resources</li>
+              <li>• Assignment tracker</li>
+            </ul>
+            <a href="#" class="mt-6 inline-flex text-sm font-bold text-bright hover:text-navy transition">Launch Student Portal →</a>
+          </article>
+
+          <article class="reveal rounded-xl border border-line bg-white p-6 shadow-card hover:shadow-lift transition">
+            <div class="h-11 w-11 rounded-lg bg-amber-50 text-gold-deep flex items-center justify-center mb-5">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg>
+            </div>
+            <h3 class="font-display text-2xl font-semibold text-navy">Parent Result &amp; Billing Portal</h3>
+            <p class="mt-2 text-sm text-slate-600">Online termly report cards, PIN result checks, and tuition payments.</p>
+            <ul class="mt-4 space-y-2 text-sm text-slate-700">
+              <li>• Terminal PIN result check</li>
+              <li>• Fee payment receipts</li>
+              <li>• Attendance alerts</li>
+            </ul>
+            <a href="#" class="mt-6 inline-flex text-sm font-bold text-gold-deep hover:text-navy transition">Launch Parent Portal →</a>
+          </article>
+
+          <article class="reveal rounded-xl border border-line bg-white p-6 shadow-card hover:shadow-lift transition">
+            <div class="h-11 w-11 rounded-lg bg-indigo-50 text-navy flex items-center justify-center mb-5">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4Z"/></svg>
+            </div>
+            <h3 class="font-display text-2xl font-semibold text-navy">Staff Resource Portal</h3>
+            <p class="mt-2 text-sm text-slate-600">Curriculum planning, CA grade entry, registers, and department updates.</p>
+            <ul class="mt-4 space-y-2 text-sm text-slate-700">
+              <li>• Gradebook &amp; CA entry</li>
+              <li>• Academic diary</li>
+              <li>• Staff announcements</li>
+            </ul>
+            <a href="dashboard.html" class="mt-6 inline-flex text-sm font-bold text-navy hover:text-bright transition">Launch Staff Portal →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why -->
+    <section id="why" class="py-20 md:py-24 bg-white">
+      <div class="mx-auto max-w-content px-4 md:px-8 lg:px-16">
+        <div class="max-w-2xl reveal">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-bright">Why Noble Vine</p>
+          <h2 class="font-display text-3xl md:text-4xl font-semibold text-navy mt-3">Why Choose Noble Vine Schools</h2>
+        </div>
+        <div class="mt-10 grid md:grid-cols-2 gap-5">
+          <article class="reveal rounded-xl border border-line p-6 md:p-7">
+            <h3 class="font-display text-2xl font-semibold text-navy">We're Fully Tech Compliant</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">State-of-the-art ICT facilities and CBT halls give students the tools to thrive in digital assessments and modern learning.</p>
+          </article>
+          <article class="reveal rounded-xl border border-line p-6 md:p-7">
+            <h3 class="font-display text-2xl font-semibold text-navy">Enriched Blended Curriculum</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">An enriching mix of intellectual growth and cultural identity — preparing learners for Nigerian and international pathways.</p>
+          </article>
+          <article class="reveal rounded-xl border border-line p-6 md:p-7">
+            <h3 class="font-display text-2xl font-semibold text-navy">Future-Ready Skills &amp; Vocational Arts</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">Leadership, creativity, and practical arts — from home economics to sewing and cultural performance — build resilient graduates.</p>
+          </article>
+          <article class="reveal rounded-xl border border-line p-6 md:p-7">
+            <h3 class="font-display text-2xl font-semibold text-navy">Solid Moral Foundation</h3>
+            <p class="mt-3 text-slate-600 leading-relaxed">We instill ethical discipline, respectful demeanor, public speaking confidence, and civic leadership that endure into adulthood.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Divisions -->
+    <section id="divisions" class="py-20 md:py-24 bg-mist">
+      <div class="mx-auto max-w-content px-4 md:px-8 lg:px-16">
+        <div class="max-w-2xl reveal">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-bright">Campuses</p>
+          <h2 class="font-display text-3xl md:text-4xl font-semibold text-navy mt-3">Academic Divisions at Noble Vine</h2>
+          <p class="mt-3 text-slate-600">From early childhood discovery to college-level mastery across every critical milestone.</p>
+        </div>
+
+        <div class="mt-10 grid lg:grid-cols-3 gap-5">
+          <article class="reveal rounded-xl overflow-hidden border border-line bg-white shadow-card">
+            <div class="h-44 bg-cover bg-center" style="background-image:url('assets/gallery/pupils.jpg')"></div>
+            <div class="p-6">
+              <span class="inline-flex rounded-full bg-emerald-50 text-emerald-800 px-3 py-1 text-[11px] font-bold uppercase tracking-wider">Nursery</span>
+              <h3 class="font-display text-2xl font-semibold text-navy mt-3">Creche, Nursery &amp; KG</h3>
+              <p class="mt-2 text-sm text-slate-600">Warm foundations for curiosity, literacy readiness, and social confidence.</p>
+              <a href="#contact" class="mt-5 inline-flex text-sm font-bold text-bright">Explore Early Years Curriculum →</a>
+            </div>
+          </article>
+
+          <article class="reveal rounded-xl overflow-hidden border border-line bg-white shadow-card">
+            <div class="h-44 bg-cover bg-center" style="background-image:url('assets/gallery/home-econs.jpg')"></div>
+            <div class="p-6">
+              <span class="inline-flex rounded-full bg-amber-50 text-amber-900 px-3 py-1 text-[11px] font-bold uppercase tracking-wider">Primary</span>
+              <h3 class="font-display text-2xl font-semibold text-navy mt-3">Primary School Campus</h3>
+              <p class="mt-2 text-sm text-slate-600">Strong academic cores with ICT fluency, creativity, and character formation.</p>
+              <a href="#contact" class="mt-5 inline-flex text-sm font-bold text-bright">Explore Primary Curriculum →</a>
+            </div>
+          </article>
+
+          <article class="reveal rounded-xl overflow-hidden border border-line bg-white shadow-card">
+            <div class="h-44 bg-cover bg-center" style="background-image:url('assets/gallery/cbt-hall.jpg')"></div>
+            <div class="p-6">
+              <span class="inline-flex rounded-full bg-blue-50 text-navy px-3 py-1 text-[11px] font-bold uppercase tracking-wider">College</span>
+              <h3 class="font-display text-2xl font-semibold text-navy mt-3">Noble Vine College</h3>
+              <p class="mt-2 text-sm text-slate-600">College excellence with CBT readiness, leadership, and tertiary preparation.</p>
+              <a href="#contact" class="mt-5 inline-flex text-sm font-bold text-bright">Explore College Pathway →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- News -->
+    <section id="news" class="py-20 md:py-24 bg-white">
+      <div class="mx-auto max-w-content px-4 md:px-8 lg:px-16">
+        <div class="flex flex-wrap items-end justify-between gap-4 reveal">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.16em] text-bright">Updates</p>
+            <h2 class="font-display text-3xl md:text-4xl font-semibold text-navy mt-3">Latest News &amp; Campus Updates</h2>
+          </div>
+          <a href="#contact" class="text-sm font-bold text-navy hover:text-bright">View all announcements →</a>
+        </div>
+
+        <div class="mt-10 grid md:grid-cols-3 gap-5">
+          <article class="reveal rounded-xl border border-line p-6 hover:shadow-lift transition">
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Academic · Oct 2025</p>
+            <h3 class="font-display text-xl font-semibold text-navy mt-3">Online Result Tracking Launched for Parents</h3>
+            <p class="mt-2 text-sm text-slate-600">Parents can now log in securely with their terminal PIN to view student progress and reports.</p>
+            <a href="#portals" class="mt-4 inline-flex text-sm font-bold text-bright">Read Full Article →</a>
+          </article>
+          <article class="reveal rounded-xl border border-line p-6 hover:shadow-lift transition">
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Campus Life · Sep 2025</p>
+            <h3 class="font-display text-xl font-semibold text-navy mt-3">Cultural Day &amp; Championship Highlights</h3>
+            <p class="mt-2 text-sm text-slate-600">Celebrating heritage, athletic prowess, and teamwork across dance, road safety, and track events.</p>
+            <a href="#gallery" class="mt-4 inline-flex text-sm font-bold text-bright">See Gallery →</a>
+          </article>
+          <article class="reveal rounded-xl border border-line p-6 hover:shadow-lift transition">
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Admissions · 2025/2026</p>
+            <h3 class="font-display text-xl font-semibold text-navy mt-3">Official 2025/2026 Admissions</h3>
+            <p class="mt-2 text-sm text-slate-600">Applications are open for Nursery, Primary, and College. Request a prospectus or speak with admin.</p>
+            <a href="#contact" class="mt-4 inline-flex text-sm font-bold text-bright">Start Application →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="py-20 md:py-24 bg-mist">
+      <div class="mx-auto max-w-content px-4 md:px-8 lg:px-16">
+        <div class="reveal">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-bright">Campus Life</p>
+          <h2 class="font-display text-3xl md:text-4xl font-semibold text-navy mt-3">Photos Speak: Life at Noble Vine</h2>
+        </div>
+
+        <div class="gallery-filters mt-7" id="galleryFilters" role="tablist" aria-label="Gallery filters">
+          <button data-filter="all" class="gallery-filter is-active" type="button" role="tab" aria-selected="true">All</button>
+          <button data-filter="cbt" class="gallery-filter" type="button" role="tab" aria-selected="false">CBT &amp; Tech</button>
+          <button data-filter="learning" class="gallery-filter" type="button" role="tab" aria-selected="false">Learning</button>
+          <button data-filter="culture" class="gallery-filter" type="button" role="tab" aria-selected="false">Cultural Day</button>
+          <button data-filter="sport" class="gallery-filter" type="button" role="tab" aria-selected="false">Sports</button>
+        </div>
+
+        <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4" id="galleryGrid">
+          <figure class="gallery-item reveal rounded-xl overflow-hidden border border-line bg-white" data-category="cbt">
+            <img src="assets/gallery/cbt-hall.jpg" alt="Students in the CBT examination hall" class="h-56 w-full object-cover" loading="lazy" />
+          </figure>
+          <figure class="gallery-item reveal rounded-xl overflow-hidden border border-line bg-white" data-category="cbt">
+            <img src="assets/gallery/cbt-2.jpg" alt="Computer-based testing lab" class="h-56 w-full object-cover" loading="lazy" />
+          </figure>
+          <figure class="gallery-item reveal rounded-xl overflow-hidden border border-line bg-white" data-category="learning">
+            <img src="assets/gallery/pupils.jpg" alt="Primary pupils in class" class="h-56 w-full object-cover" loading="lazy" />
+          </figure>
+          <figure class="gallery-item reveal rounded-xl overflow-hidden border border-line bg-white" data-category="learning">
+            <img src="assets/gallery/cooking.jpg" alt="Home economics cooking class" class="h-56 w-full object-cover" loading="lazy" />
+          </figure>
+          <figure class="gallery-item reveal rounded-xl overflow-hidden border border-line bg-white" data-category="learning">
+            <img src="assets/gallery/sewing.jpg" alt="Vocational sewing class" class="h-56 w-full object-cover" loading="lazy" />
+          </figure>
+          <figure class="gallery-item reveal rounded-xl overflow-hidden border border-line bg-white" data-category="culture">
+            <img src="assets/gallery/cultural-day.jpg" alt="Cultural day celebration" class="h-56 w-full object-cover" loading="lazy" />
+          </figure>
+          <figure class="gallery-item reveal rounded-xl overflow-hidden border border-line bg-white" data-category="culture">
+            <img src="assets/gallery/culture.jpg" alt="Students in traditional attire" class="h-56 w-full object-cover" loading="lazy" />
+          </figure>
+          <figure class="gallery-item reveal rounded-xl overflow-hidden border border-line bg-white" data-category="culture">
+            <img src="assets/gallery/cul.jpg" alt="Cultural performance" class="h-56 w-full object-cover" loading="lazy" />
+          </figure>
+          <figure class="gallery-item reveal rounded-xl overflow-hidden border border-line bg-white" data-category="sport">
+            <img src="assets/gallery/champs.jpg" alt="Sports champions with medals" class="h-56 w-full object-cover" loading="lazy" />
+          </figure>
+          <figure class="gallery-item reveal rounded-xl overflow-hidden border border-line bg-white" data-category="sport">
+            <img src="assets/gallery/winners.jpg" alt="Winning team celebration" class="h-56 w-full object-cover" loading="lazy" />
+          </figure>
+          <figure class="gallery-item reveal rounded-xl overflow-hidden border border-line bg-white" data-category="learning">
+            <img src="assets/gallery/home-econs.jpg" alt="Home economics practical" class="h-56 w-full object-cover" loading="lazy" />
+          </figure>
+          <figure class="gallery-item reveal rounded-xl overflow-hidden border border-line bg-white" data-category="learning">
+            <img src="assets/gallery/noble-building-1.jpg" alt="Noble Vine Schools building" class="h-56 w-full object-cover" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact / Admissions -->
+    <section id="contact" class="py-20 md:py-24 bg-navy-deep text-white">
+      <div class="mx-auto max-w-content px-4 md:px-8 lg:px-16 grid lg:grid-cols-2 gap-10 items-start">
+        <div class="reveal">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-gold">Admissions</p>
+          <h2 class="font-display text-3xl md:text-4xl font-semibold mt-3">Secure Your Child's Future at Noble Vine Schools</h2>
+          <p class="mt-4 text-white/80 leading-relaxed max-w-xl">
+            Established in 2006 (Nursery &amp; Primary) and elevated with Noble Vine College in 2012. Anchored on our divine pillar: <em class="text-gold not-italic font-semibold">God is with Us</em>.
+          </p>
+          <div class="mt-8 space-y-3 text-sm text-white/85">
+            <p>39/4 Solo Ogun Street off Oladimeji, Lagos, Nigeria</p>
+            <p><a class="hover:text-gold transition" href="tel:+2348060654433">0806 065 4433</a></p>
+            <p><a class="hover:text-gold transition" href="mailto:info@noblevineschools.com.ng">info@noblevineschools.com.ng</a></p>
+          </div>
+        </div>
+
+        <form id="inquiryForm" class="reveal rounded-xl bg-white text-navy-dark p-6 md:p-8 shadow-lift" novalidate>
+          <h3 class="font-display text-2xl font-semibold text-navy">Fast Track Admission Inquiry</h3>
+          <p class="mt-1 text-sm text-slate-600">We'll respond with the prospectus and next steps.</p>
+
+          <div class="mt-6 grid gap-4">
+            <label class="block text-sm font-semibold">
+              Parent's Full Name
+              <input name="parentName" required class="mt-1.5 w-full rounded border border-slate-300 px-3 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-bright focus:border-bright" placeholder="Full name" />
+            </label>
+            <label class="block text-sm font-semibold">
+              Phone Number
+              <input name="phone" type="tel" required class="mt-1.5 w-full rounded border border-slate-300 px-3 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-bright" placeholder="080…" />
+            </label>
+            <label class="block text-sm font-semibold">
+              Intended Campus / Division
+              <select name="campus" required class="mt-1.5 w-full rounded border border-slate-300 px-3 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-bright bg-white">
+                <option value="">Select division</option>
+                <option>Creche / Nursery / KG</option>
+                <option>Primary School</option>
+                <option>Noble Vine College</option>
+              </select>
+            </label>
+            <label class="block text-sm font-semibold">
+              Email Address
+              <input name="email" type="email" required class="mt-1.5 w-full rounded border border-slate-300 px-3 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-bright" placeholder="you@email.com" />
+            </label>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            <button type="submit" class="inline-flex items-center rounded bg-navy px-5 py-3 text-sm font-extrabold text-white hover:bg-bright transition">Request Prospectus</button>
+            <a href="tel:+2348060654433" class="inline-flex items-center rounded border border-slate-300 px-5 py-3 text-sm font-bold text-navy hover:bg-mist transition">Speak with Admin</a>
+          </div>
+          <p id="formStatus" class="mt-4 text-sm font-semibold text-emerald-700 hidden" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-navy-dark text-white/80">
+    <div class="mx-auto max-w-content px-4 md:px-8 lg:px-16 py-14 grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div>
+        <a href="#top" class="inline-flex" aria-label="Noble Vine Schools">
+          <img src="assets/logo.jpg" alt="Noble Vine Schools" class="h-12 w-auto bg-white rounded p-1 object-contain" />
+        </a>
+        <p class="mt-4 text-sm leading-relaxed">Premier Nursery, Primary and College education in Lagos — academic excellence with moral fortitude.</p>
+      </div>
+      <div class="footer-acc" data-footer-acc>
+        <button type="button" class="footer-acc-btn" aria-expanded="false" aria-controls="footerAccInstitutional" id="footerAccBtnInstitutional">
+          <span>Institutional</span>
+          <svg class="footer-acc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="footer-acc-panel" id="footerAccInstitutional" role="region" aria-labelledby="footerAccBtnInstitutional">
+          <ul>
+            <li><a class="hover:text-white" href="#why">About</a></li>
+            <li><a class="hover:text-white" href="#divisions">Academics</a></li>
+            <li><a class="hover:text-white" href="#news">News &amp; Events</a></li>
+            <li><a class="hover:text-white" href="#contact">Admissions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-acc" data-footer-acc>
+        <button type="button" class="footer-acc-btn" aria-expanded="false" aria-controls="footerAccPortals" id="footerAccBtnPortals">
+          <span>Portals &amp; E-Learning</span>
+          <svg class="footer-acc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="footer-acc-panel" id="footerAccPortals" role="region" aria-labelledby="footerAccBtnPortals">
+          <ul>
+            <li><a class="hover:text-white" href="#portals">Student Portal</a></li>
+            <li><a class="hover:text-white" href="#portals">Parent Portal</a></li>
+            <li><a class="hover:text-white" href="dashboard.html">Staff Portal</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-acc" data-footer-acc>
+        <button type="button" class="footer-acc-btn" aria-expanded="false" aria-controls="footerAccCampus" id="footerAccBtnCampus">
+          <span>Campus</span>
+          <svg class="footer-acc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="footer-acc-panel" id="footerAccCampus" role="region" aria-labelledby="footerAccBtnCampus">
+          <ul>
+            <li>39/4 Solo Ogun Street off Oladimeji, Lagos</li>
+            <li><a class="hover:text-white" href="tel:+2348060654433">0806 065 4433</a></li>
+            <li><a class="hover:text-white" href="mailto:info@noblevineschools.com.ng">info@noblevineschools.com.ng</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-white/10">
+      <div class="mx-auto max-w-content px-4 md:px-8 lg:px-16 py-4 flex flex-wrap gap-3 justify-between text-xs">
+        <p>© <span id="year"></span> Noble Vine Schools. All rights reserved.</p>
+        <p class="text-white/50">UI from Stitch · Noble Vine Academic Excellence</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

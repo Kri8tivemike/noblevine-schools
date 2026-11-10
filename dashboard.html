@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard — Noble Vine Schools</title>
+  <meta name="description" content="Noble Vine Schools management dashboard — students, fees, CBT, and campus operations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: { DEFAULT: '#1E3A8A', deep: '#00236F', dark: '#0F172A' },
+            bright: '#2563EB',
+            gold: { DEFAULT: '#F59E0B', deep: '#EA580C' },
+            mist: '#F8FAFC',
+            line: '#E2E8F0',
+            success: '#059669',
+            danger: '#DC2626'
+          },
+          fontFamily: {
+            display: ['"EB Garamond"', 'Georgia', 'serif'],
+            sans: ['Manrope', 'system-ui', 'sans-serif']
+          },
+          boxShadow: {
+            card: '0 1px 3px 0 rgba(15,23,42,.04), 0 1px 2px -1px rgba(15,23,42,.04)',
+            lift: '0 10px 15px -3px rgba(30,58,138,.08), 0 4px 6px -4px rgba(30,58,138,.04)'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    html, body {
+      height: 100%;
+    }
+    body {
+      margin: 0;
+      font-family: Manrope, system-ui, sans-serif;
+      color: #0F172A;
+      background: #F8FAFC;
+      overflow: hidden;
+    }
+    .font-display { font-family: "EB Garamond", Georgia, serif; letter-spacing: -0.01em; }
+
+    .dash-shell {
+      display: flex;
+      height: 100vh;
+      height: 100dvh;
+      width: 100%;
+      max-width: 100vw;
+      overflow: hidden;
+    }
+    .dash-main {
+      min-width: 0;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+
+    .sidebar {
+      width: 16.5rem;
+      background: #0B1220;
+      color: rgba(255,255,255,.78);
+      height: 100%;
+      max-height: 100vh;
+      max-height: 100dvh;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: transform .28s cubic-bezier(.22,1,.36,1);
+    }
+    .sidebar-brand {
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      padding: 1rem 1rem .95rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .sidebar-brand .copy { min-width: 0; flex: 1; }
+    .sidebar-brand .name {
+      font-family: "EB Garamond", Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      color: #fff;
+      line-height: 1.15;
+    }
+    .sidebar-brand .meta {
+      margin-top: .15rem;
+      font-size: .62rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #F59E0B;
+    }
+    .logo-mark {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 9999px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 0 0 1.5px rgba(245, 158, 11, 0.65);
+      flex-shrink: 0;
+    }
+    .logo-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transform: scale(1.08);
+    }
+    .sidebar-session {
+      margin: .85rem 1rem 0;
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .35rem .65rem;
+      border-radius: 9999px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      font-size: .68rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.62);
+      letter-spacing: .02em;
+    }
+    .sidebar-session::before {
+      content: "";
+      width: .4rem;
+      height: .4rem;
+      border-radius: 9999px;
+      background: #059669;
+      box-shadow: 0 0 0 3px rgba(5, 150, 105, .18);
+    }
+    .sidebar-nav {
+      flex: 1 1 auto;
+      min-height: 0;
+      padding: .65rem .7rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: .15rem;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,.18) transparent;
+    }
+    .sidebar-nav::-webkit-scrollbar { width: 4px; }
+    .sidebar-nav::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,.16);
+      border-radius: 9999px;
+    }
+    .nav-section + .nav-section {
+      margin-top: .55rem;
+      padding-top: .55rem;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .nav-group-label {
+      font-size: .62rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.48);
+      padding: .35rem .7rem .4rem;
+    }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      padding: .62rem .7rem;
+      border-radius: .55rem;
+      font-size: .84rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.72);
+      text-decoration: none;
+      transition: background .15s ease, color .15s ease;
+      min-height: 2.55rem;
+    }
+    .nav-link:hover {
+      background: rgba(255,255,255,.06);
+      color: #fff;
+    }
+    .nav-link.is-active {
+      background: rgba(37, 99, 235, .2);
+      color: #fff;
+      box-shadow: inset 2.5px 0 0 #F59E0B;
+    }
+    .nav-link svg {
+      width: 1.05rem;
+      height: 1.05rem;
+      flex-shrink: 0;
+      opacity: .72;
+      stroke-width: 1.7;
+    }
+    .nav-link:hover svg,
+    .nav-link.is-active svg { opacity: 1; }
+    .sidebar-foot {
+      flex-shrink: 0;
+      margin-top: auto;
+      padding: .9rem 1rem 1.1rem;
+      border-top: 1px solid rgba(255,255,255,.08);
+      background: #0B1220;
+    }
+    .sidebar-brand,
+    .sidebar-session-wrap {
+      flex-shrink: 0;
+    }
+    .sidebar-badge {
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+      padding: .7rem .75rem;
+      border-radius: .65rem;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.07);
+    }
+    .sidebar-badge .status {
+      font-size: .62rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(245, 158, 11, .92);
+    }
+    .sidebar-badge .levels {
+      font-size: .72rem;
+      line-height: 1.35;
+      color: rgba(255,255,255,.5);
+    }
+    .sidebar-back {
+      display: inline-flex;
+      margin-top: .75rem;
+      font-size: .75rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.55);
+      text-decoration: none;
+      transition: color .15s ease;
+    }
+    .sidebar-back:hover { color: #F59E0B; }
+    .sidebar-close {
+      display: none;
+      width: 2rem;
+      height: 2rem;
+      border: 0;
+      border-radius: .5rem;
+      background: transparent;
+      color: rgba(255,255,255,.65);
+      align-items: center;
+      justify-content: center;
+    }
+    .sidebar-close:hover { background: rgba(255,255,255,.08); color: #fff; }
+    @media (max-width: 1023px) {
+      .sidebar-close { display: inline-flex; }
+    }
+
+    .topbar {
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.96);
+      border-bottom: 1px solid #E2E8F0;
+    }
+    .topbar-row {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      width: 100%;
+      min-height: 3.25rem;
+    }
+    .icon-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 0 !important;
+      outline: none;
+      box-shadow: none;
+      border-radius: .65rem;
+      background: transparent !important;
+      color: #0F172A;
+      flex-shrink: 0;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: color .15s ease, opacity .15s ease;
+    }
+    .icon-btn:hover { color: #00236F; }
+    .icon-btn:focus-visible { color: #00236F; }
+    #sidebarOpen {
+      width: 2.25rem;
+      height: 2.25rem;
+      padding: 0;
+      color: #00236F;
+    }
+    #sidebarOpen:hover,
+    #sidebarOpen:focus-visible {
+      color: #1E3A8A;
+      background: transparent !important;
+      box-shadow: none;
+    }
+    .menu-bars {
+      position: relative;
+      width: 1.25rem;
+      height: .82rem;
+      display: block;
+    }
+    .menu-bars span {
+      position: absolute;
+      left: 0;
+      height: 2.25px;
+      border-radius: 9999px;
+      background: currentColor;
+      transition: width .22s ease, transform .22s ease, opacity .15s ease, top .22s ease;
+    }
+    .menu-bars span:nth-child(1) { top: 0; width: 100%; }
+    .menu-bars span:nth-child(2) { top: 50%; width: 62%; transform: translateY(-50%); }
+    .menu-bars span:nth-child(3) { bottom: 0; width: 82%; }
+    #sidebarOpen[aria-expanded="true"] .menu-bars span:nth-child(1) {
+      top: 50%; width: 100%; transform: translateY(-50%) rotate(45deg);
+    }
+    #sidebarOpen[aria-expanded="true"] .menu-bars span:nth-child(2) {
+      opacity: 0; width: 0;
+    }
+    #sidebarOpen[aria-expanded="true"] .menu-bars span:nth-child(3) {
+      top: 50%; bottom: auto; width: 100%; transform: translateY(-50%) rotate(-45deg);
+    }
+    .topbar-title {
+      min-width: 0;
+      flex: 1;
+      line-height: 1.1;
+    }
+    .topbar-title .eyebrow {
+      display: block;
+      font-size: .58rem;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: #F59E0B;
+    }
+    .topbar-title .label {
+      display: block;
+      margin-top: .12rem;
+      font-family: "EB Garamond", Georgia, serif;
+      font-size: 1.12rem;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      color: #00236F;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    @media (min-width: 640px) {
+      .topbar-title { display: none; }
+    }
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: .2rem;
+      flex-shrink: 0;
+    }
+    .notif-dot {
+      position: absolute;
+      top: .4rem;
+      right: .4rem;
+      width: .5rem;
+      height: .5rem;
+      border-radius: 9999px;
+      background: #DC2626;
+      box-shadow: 0 0 0 2px #fff;
+    }
+    .avatar-btn {
+      width: 2.15rem;
+      height: 2.15rem;
+      border-radius: 9999px;
+      background: #1E3A8A;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .02em;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(30, 58, 138, 0.18);
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #E2E8F0;
+      border-radius: .75rem;
+      box-shadow: 0 1px 3px 0 rgba(15,23,42,.04);
+    }
+
+    .kpi-label {
+      font-size: .65rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #64748B;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: .5rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: .15rem;
+      margin-inline: -.15rem;
+      padding-inline: .15rem;
+    }
+    .quick-actions::-webkit-scrollbar { display: none; }
+    .quick-actions > button {
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+
+    .chart-bars {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: .45rem;
+      align-items: end;
+      height: 8.5rem;
+    }
+    .chart-bar {
+      position: relative;
+      border-radius: .35rem .35rem .15rem .15rem;
+      background: linear-gradient(180deg, #2563EB 0%, #1E3A8A 100%);
+      min-height: .4rem;
+      transition: opacity .2s ease;
+    }
+    .chart-bar:hover { opacity: .85; }
+    .chart-bar.is-levy {
+      background: linear-gradient(180deg, #F59E0B 0%, #EA580C 100%);
+    }
+
+    .attendance-ring {
+      --pct: 96.2;
+      width: 6.75rem;
+      height: 6.75rem;
+      border-radius: 9999px;
+      background:
+        radial-gradient(closest-side, #fff 72%, transparent 73% 100%),
+        conic-gradient(#059669 calc(var(--pct) * 1%), #E2E8F0 0);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, .5);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+      z-index: 40;
+    }
+    .sidebar-backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .table-desktop { display: none; }
+    .admissions-mobile { display: grid; gap: .65rem; }
+
+    .status-strip {
+      display: flex;
+      gap: .4rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding: 0 .25rem .15rem;
+    }
+    .status-strip::-webkit-scrollbar { display: none; }
+
+    @media (max-width: 1023px) {
+      .sidebar {
+        position: fixed !important;
+        inset: 0 auto 0 0;
+        z-index: 50;
+        width: min(18rem, 86vw);
+        height: 100vh !important;
+        height: 100dvh !important;
+        max-height: 100vh !important;
+        max-height: 100dvh !important;
+        transform: translateX(-105%);
+        box-shadow: 12px 0 40px rgba(0,0,0,.28);
+      }
+      .sidebar.is-open { transform: translateX(0); }
+      .dash-main { width: 100%; max-width: 100%; }
+    }
+
+    @media (min-width: 640px) {
+      .chart-bars { height: 9.5rem; gap: .55rem; }
+      .attendance-ring { width: 7.5rem; height: 7.5rem; }
+      .kpi-label { font-size: .68rem; }
+    }
+
+    @media (min-width: 768px) {
+      .table-desktop { display: block; }
+      .admissions-mobile { display: none; }
+      .quick-actions {
+        overflow: visible;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 379px) {
+      .welcome-title { font-size: 1.65rem !important; }
+      .kpi-value { font-size: 1.6rem !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dash-shell flex">
+    <div id="sidebarBackdrop" class="sidebar-backdrop lg:hidden" hidden aria-hidden="true"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar" aria-label="Admin navigation">
+      <div class="sidebar-brand">
+        <span class="logo-mark" aria-hidden="true">
+          <img src="assets/logo-mark.png" alt="" />
+        </span>
+        <div class="copy">
+          <p class="name">Noble Vine</p>
+          <p class="meta">Admin Workspace</p>
+        </div>
+        <button type="button" id="sidebarClose" class="sidebar-close" aria-label="Close menu">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+
+      <div class="sidebar-session-wrap">
+        <span class="sidebar-session">2025/2026 · Term 1</span>
+      </div>
+
+      <nav class="sidebar-nav" id="dashNav">
+        <div class="nav-section">
+          <p class="nav-group-label">Main</p>
+          <a class="nav-link is-active" href="dashboard.html" data-nav="dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            Dashboard
+          </a>
+          <a class="nav-link" href="#analytics" data-nav="analytics">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19V5M10 19V9M16 19v-6M22 19V7"/></svg>
+            Analytics
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <p class="nav-group-label">Academic</p>
+          <a class="nav-link" href="#students" data-nav="students">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3l9 4.5-9 4.5L3 7.5 12 3z"/><path d="M5 10.5V16c0 1.5 3.1 3 7 3s7-1.5 7-3v-5.5"/></svg>
+            Students
+          </a>
+          <a class="nav-link" href="#staff" data-nav="staff">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="3"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a3 3 0 0 1 0 5.74"/></svg>
+            Staff
+          </a>
+          <a class="nav-link" href="#classes" data-nav="classes">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+            Classes
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <p class="nav-group-label">Exams</p>
+          <a class="nav-link" href="#cbt" data-nav="cbt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
+            CBT Lab
+          </a>
+          <a class="nav-link" href="#pins" data-nav="pins">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+            Result PINs
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <p class="nav-group-label">Finance</p>
+          <a class="nav-link" href="#fees" data-nav="fees">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            Fees
+          </a>
+          <a class="nav-link" href="#invoices" data-nav="invoices">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 2h8l4 4v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M14 2v4h4M9 13h6M9 17h4"/></svg>
+            Invoices
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <p class="nav-group-label">Communication</p>
+          <a class="nav-link" href="#notices" data-nav="notices">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 11l18-8v18L3 13v-2z"/><path d="M11.5 17.5V21"/></svg>
+            Notice Board
+          </a>
+          <a class="nav-link" href="#messages" data-nav="messages">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>
+            Messages
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <p class="nav-group-label">Settings</p>
+          <a class="nav-link" href="#profile" data-nav="profile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>
+            School Profile
+          </a>
+          <a class="nav-link" href="#calendar" data-nav="calendar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>
+            Academic Calendar
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-foot">
+        <div class="sidebar-badge">
+          <p class="status">Lagos State Approved</p>
+          <p class="levels">Creche · Nursery · Primary · College</p>
+        </div>
+        <a href="index.html" class="sidebar-back">← Back to website</a>
+      </div>
+    </aside>
+
+    <!-- Main column -->
+    <div class="dash-main flex-1 min-w-0 flex flex-col">
+      <header class="topbar sticky top-0 z-30">
+        <div class="px-3 sm:px-4 md:px-6 py-1.5 sm:py-0 sm:h-16 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+          <div class="topbar-row">
+            <button type="button" id="sidebarOpen" class="icon-btn lg:hidden" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">
+              <span class="menu-bars" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </button>
+
+            <div class="topbar-title sm:hidden">
+              <span class="eyebrow">Noble Vine</span>
+              <span class="label">Admin workspace</span>
+            </div>
+
+            <label class="relative hidden sm:block flex-1 min-w-0 max-w-xl">
+              <span class="sr-only">Search</span>
+              <svg class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+              <input id="dashSearchDesktop" type="search" placeholder="Search student, admission no, staff ID, receipt…" class="dash-search w-full rounded-lg border border-line bg-mist pl-10 pr-14 py-2.5 text-sm text-navy-dark placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-bright/40 focus:border-bright" />
+              <kbd class="absolute right-3 top-1/2 -translate-y-1/2 hidden md:inline-flex rounded border border-line bg-white px-1.5 py-0.5 text-[10px] font-bold text-slate-400">⌘K</kbd>
+            </label>
+
+            <div class="hidden md:flex items-center gap-2">
+              <span class="inline-flex items-center gap-1.5 rounded-full bg-navy/5 border border-line px-3 py-1.5 text-[11px] font-bold text-navy whitespace-nowrap">2025/2026 Term 1</span>
+              <span class="inline-flex items-center gap-1.5 rounded-full bg-success/10 border border-success/20 px-3 py-1.5 text-[11px] font-bold text-success whitespace-nowrap">CBT Lab: 240/250 Online</span>
+            </div>
+
+            <div class="topbar-actions ml-auto">
+              <button type="button" class="icon-btn relative" aria-label="Notifications">
+                <svg class="h-[1.15rem] w-[1.15rem]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 7H3s3 0 3-7"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+                <span class="notif-dot" aria-hidden="true"></span>
+                <span class="sr-only">3 unread</span>
+              </button>
+              <button type="button" class="icon-btn !w-auto !px-1" aria-label="Dr. Adeleke profile">
+                <span class="avatar-btn">DA</span>
+              </button>
+              <div class="hidden lg:block leading-tight pr-1">
+                <p class="text-sm font-bold text-navy-dark">Dr. Adeleke</p>
+                <p class="text-[11px] text-slate-500">Super Admin</p>
+              </div>
+            </div>
+          </div>
+
+          <label class="relative sm:hidden w-full">
+            <span class="sr-only">Search</span>
+            <svg class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input id="dashSearch" type="search" placeholder="Search student, admission no…" class="dash-search w-full rounded-lg border border-line bg-mist pl-10 pr-3 py-2.5 text-sm text-navy-dark placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-bright/40 focus:border-bright" />
+          </label>
+
+          <div class="status-strip md:hidden">
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-navy/5 border border-line px-2.5 py-1 text-[10px] font-bold text-navy whitespace-nowrap">2025/2026 Term 1</span>
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-success/10 border border-success/20 px-2.5 py-1 text-[10px] font-bold text-success whitespace-nowrap">CBT 240/250 Online</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="flex-1 px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8 space-y-4 sm:space-y-6 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+        <!-- Welcome + quick actions -->
+        <section class="flex flex-col xl:flex-row xl:items-end xl:justify-between gap-3 sm:gap-4">
+          <div>
+            <div class="hidden sm:flex flex-wrap items-center gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-500">
+              <span>Academic Session 2025/2026</span>
+              <span class="text-line">·</span>
+              <span>First Term (Week 7 of 13)</span>
+              <span class="inline-flex items-center gap-1.5 rounded-full bg-success/10 text-success px-2 py-0.5 normal-case tracking-normal">
+                <span class="h-1.5 w-1.5 rounded-full bg-success"></span>
+                System Operational
+              </span>
+            </div>
+            <h1 class="welcome-title font-display text-[1.85rem] sm:text-3xl md:text-4xl font-semibold text-navy-deep sm:mt-2 leading-tight">Welcome back, Dr. Adeleke</h1>
+            <p class="mt-1 text-sm text-slate-600 max-w-2xl hidden sm:block">Real-time academic tracking, fee streams, and CBT telemetry for Noble Vine Schools.</p>
+          </div>
+          <div class="quick-actions">
+            <button type="button" class="inline-flex items-center gap-2 rounded-lg bg-navy px-3.5 py-2.5 text-sm font-bold text-white hover:bg-navy-deep transition">Enroll Student</button>
+            <button type="button" class="inline-flex items-center gap-2 rounded-lg bg-gold px-3.5 py-2.5 text-sm font-extrabold text-navy-dark hover:bg-gold-deep hover:text-white transition">Generate PINs</button>
+            <button type="button" class="inline-flex items-center gap-2 rounded-lg border border-line bg-white px-3.5 py-2.5 text-sm font-bold text-navy hover:bg-mist transition">Schedule CBT</button>
+            <button type="button" class="inline-flex items-center gap-2 rounded-lg border border-line bg-white px-3.5 py-2.5 text-sm font-bold text-navy hover:bg-mist transition">Collect Fees</button>
+          </div>
+        </section>
+
+        <!-- KPI cards -->
+        <section class="grid grid-cols-2 xl:grid-cols-4 gap-2.5 sm:gap-4" aria-label="Key metrics">
+          <article class="card p-3.5 sm:p-5">
+            <p class="kpi-label">Total Students</p>
+            <div class="mt-2 sm:mt-3 flex items-end justify-between gap-2">
+              <p class="kpi-value font-display text-2xl sm:text-3xl font-semibold text-navy-deep">842</p>
+              <span class="text-[11px] sm:text-xs font-bold text-success">+5.4%</span>
+            </div>
+            <p class="mt-1.5 sm:mt-2 text-[10px] sm:text-xs text-slate-500 leading-snug">Creche 98 · Pry 384 · Col 360</p>
+          </article>
+          <article class="card p-3.5 sm:p-5">
+            <p class="kpi-label">Staff &amp; Faculty</p>
+            <div class="mt-2 sm:mt-3 flex items-end justify-between gap-2">
+              <p class="kpi-value font-display text-2xl sm:text-3xl font-semibold text-navy-deep">72</p>
+              <span class="text-[11px] sm:text-xs font-bold text-success">98%</span>
+            </div>
+            <p class="mt-1.5 sm:mt-2 text-[10px] sm:text-xs text-slate-500 leading-snug">54 Acad · 18 Non-Acad</p>
+          </article>
+          <article class="card p-3.5 sm:p-5">
+            <p class="kpi-label">Term 1 Revenue</p>
+            <div class="mt-2 sm:mt-3 flex items-end justify-between gap-2">
+              <p class="kpi-value font-display text-2xl sm:text-3xl font-semibold text-navy-deep">₦38.45M</p>
+              <span class="text-[11px] sm:text-xs font-bold text-bright">91.5%</span>
+            </div>
+            <p class="mt-1.5 sm:mt-2 text-[10px] sm:text-xs text-slate-500 leading-snug">of ₦42M · +₦2.1M wk</p>
+          </article>
+          <article class="card p-3.5 sm:p-5">
+            <p class="kpi-label">CBT Readiness</p>
+            <div class="mt-2 sm:mt-3 flex items-end justify-between gap-2">
+              <p class="kpi-value font-display text-2xl sm:text-3xl font-semibold text-navy-deep">248/250</p>
+              <span class="text-[11px] sm:text-xs font-bold text-success">Online</span>
+            </div>
+            <p class="mt-1.5 sm:mt-2 text-[10px] sm:text-xs text-slate-500 leading-snug">WAEC / JAMB · Hall A &amp; B</p>
+          </article>
+        </section>
+
+        <!-- Main grid -->
+        <section class="grid xl:grid-cols-12 gap-4 sm:gap-5">
+          <div class="xl:col-span-8 space-y-4 sm:space-y-5">
+            <!-- CBT status -->
+            <article id="cbt" class="card overflow-hidden">
+              <div class="flex flex-col md:flex-row">
+                <div class="md:w-44 shrink-0 relative h-36 sm:h-40 md:min-h-[9rem] md:h-auto">
+                  <img src="assets/gallery/cbt-hall.jpg" alt="" class="absolute inset-0 h-full w-full object-cover" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-navy-dark/70 to-navy-dark/20"></div>
+                  <p class="absolute bottom-3 left-3 right-3 text-[10px] font-bold uppercase tracking-[0.12em] text-white/90">E-Testing Center</p>
+                </div>
+                <div class="flex-1 p-4 sm:p-5">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <h2 class="font-display text-lg sm:text-xl font-semibold text-navy-deep">CBT Examination Center</h2>
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-danger/10 text-danger px-2.5 py-1 text-[11px] font-bold">
+                      <span class="h-1.5 w-1.5 rounded-full bg-danger animate-pulse"></span>
+                      Active Test
+                    </span>
+                  </div>
+                  <p class="mt-1 text-sm text-slate-600">JSS 3 Mock: Integrated Science &amp; Tech CA 2</p>
+                  <p class="mt-1 text-xs text-slate-500">Invigilator: Mr. Emmanuel Chukwuma · 182 logged in · 24m left</p>
+                  <div class="mt-4 grid grid-cols-3 gap-2 sm:gap-3">
+                    <div class="rounded-lg bg-mist border border-line px-2.5 sm:px-3 py-2.5">
+                      <p class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-500">Done</p>
+                      <p class="mt-1 text-base sm:text-lg font-bold text-navy-deep">78.4%</p>
+                      <p class="text-[10px] sm:text-[11px] text-slate-500">143/182</p>
+                    </div>
+                    <div class="rounded-lg bg-mist border border-line px-2.5 sm:px-3 py-2.5">
+                      <p class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-500">Lab A</p>
+                      <p class="mt-1 text-base sm:text-lg font-bold text-navy-deep">125/125</p>
+                      <p class="text-[10px] sm:text-[11px] text-success font-semibold">Locked</p>
+                    </div>
+                    <div class="rounded-lg bg-mist border border-line px-2.5 sm:px-3 py-2.5">
+                      <p class="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-500">Lab B</p>
+                      <p class="mt-1 text-base sm:text-lg font-bold text-navy-deep">123/125</p>
+                      <p class="text-[10px] sm:text-[11px] text-slate-500">Online</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Revenue -->
+            <article id="fees" class="card p-4 sm:p-5">
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <h2 class="font-display text-lg sm:text-xl font-semibold text-navy-deep">Term 1 Revenue &amp; Cashflow</h2>
+                  <p class="mt-1 text-sm text-slate-500">Fee reconciliation by academic category</p>
+                </div>
+                <div class="flex items-center gap-3 text-[11px] font-bold">
+                  <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-sm bg-navy"></span>Tuition</span>
+                  <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-sm bg-gold"></span>CBT &amp; Levies</span>
+                </div>
+              </div>
+              <div class="mt-5 chart-bars" aria-hidden="true">
+                <div class="flex flex-col justify-end gap-1 h-full">
+                  <div class="chart-bar is-levy" style="height:18%"></div>
+                  <div class="chart-bar" style="height:42%"></div>
+                </div>
+                <div class="flex flex-col justify-end gap-1 h-full">
+                  <div class="chart-bar is-levy" style="height:22%"></div>
+                  <div class="chart-bar" style="height:58%"></div>
+                </div>
+                <div class="flex flex-col justify-end gap-1 h-full">
+                  <div class="chart-bar is-levy" style="height:35%"></div>
+                  <div class="chart-bar" style="height:92%"></div>
+                </div>
+                <div class="flex flex-col justify-end gap-1 h-full">
+                  <div class="chart-bar is-levy" style="height:28%"></div>
+                  <div class="chart-bar" style="height:70%"></div>
+                </div>
+                <div class="flex flex-col justify-end gap-1 h-full">
+                  <div class="chart-bar is-levy" style="height:24%"></div>
+                  <div class="chart-bar" style="height:64%"></div>
+                </div>
+                <div class="flex flex-col justify-end gap-1 h-full">
+                  <div class="chart-bar is-levy" style="height:30%"></div>
+                  <div class="chart-bar" style="height:78%"></div>
+                </div>
+              </div>
+              <div class="mt-2 grid grid-cols-6 gap-2 text-center text-[10px] font-semibold text-slate-500">
+                <span>Wk 1</span><span>Wk 2</span><span>Wk 3</span><span>Wk 4</span><span>Wk 5</span><span>Wk 6</span>
+              </div>
+              <div class="mt-5 grid sm:grid-cols-2 gap-3">
+                <div class="rounded-lg border border-line bg-mist px-4 py-3">
+                  <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Outstanding unpaid</p>
+                  <p class="mt-1 font-display text-2xl font-semibold text-danger">₦3.55M</p>
+                </div>
+                <div class="rounded-lg border border-line bg-mist px-4 py-3">
+                  <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500">PIN batch ready</p>
+                  <p class="mt-1 font-display text-2xl font-semibold text-navy-deep">800</p>
+                  <p class="text-[11px] text-slate-500">@ ₦1,500 each · Result cards</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Admissions -->
+            <article id="students" class="card overflow-hidden">
+              <div class="flex flex-wrap items-center justify-between gap-3 px-4 sm:px-5 pt-4 sm:pt-5">
+                <div>
+                  <h2 class="font-display text-lg sm:text-xl font-semibold text-navy-deep">Recent Student Admissions</h2>
+                  <p class="mt-1 text-sm text-slate-500">Latest enrollments for First Term 2025/2026</p>
+                </div>
+                <button type="button" class="inline-flex items-center rounded-lg border border-line px-3 py-1.5 text-xs font-bold text-navy hover:bg-mist">Filter Class</button>
+              </div>
+
+              <div class="admissions-mobile px-4 pb-2 mt-3">
+                <div class="rounded-xl border border-line bg-mist/40 p-3.5">
+                  <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-center gap-3 min-w-0">
+                      <span class="h-9 w-9 shrink-0 rounded-full bg-navy/10 text-navy grid place-items-center text-xs font-bold">AO</span>
+                      <div class="min-w-0">
+                        <p class="font-semibold text-navy-dark truncate">Adeyemi Oluwaseun</p>
+                        <p class="text-[11px] text-slate-500">NV/2025/1108 · SSS 2 Science</p>
+                      </div>
+                    </div>
+                    <span class="inline-flex rounded-full bg-success/10 text-success px-2 py-1 text-[10px] font-bold whitespace-nowrap">Full Paid</span>
+                  </div>
+                </div>
+                <div class="rounded-xl border border-line bg-mist/40 p-3.5">
+                  <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-center gap-3 min-w-0">
+                      <span class="h-9 w-9 shrink-0 rounded-full bg-bright/10 text-bright grid place-items-center text-xs font-bold">CB</span>
+                      <div class="min-w-0">
+                        <p class="font-semibold text-navy-dark truncate">Chukwuemeka Blessing</p>
+                        <p class="text-[11px] text-slate-500">NV/2025/1109 · Pry 5 Diamond</p>
+                      </div>
+                    </div>
+                    <span class="inline-flex rounded-full bg-gold/15 text-gold-deep px-2 py-1 text-[10px] font-bold whitespace-nowrap">50% Pay</span>
+                  </div>
+                </div>
+                <div class="rounded-xl border border-line bg-mist/40 p-3.5">
+                  <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-center gap-3 min-w-0">
+                      <span class="h-9 w-9 shrink-0 rounded-full bg-success/10 text-success grid place-items-center text-xs font-bold">TI</span>
+                      <div class="min-w-0">
+                        <p class="font-semibold text-navy-dark truncate">Tijani Ibrahim O.</p>
+                        <p class="text-[11px] text-slate-500">NV/2025/1110 · JSS 1 Pearl</p>
+                      </div>
+                    </div>
+                    <span class="inline-flex rounded-full bg-success/10 text-success px-2 py-1 text-[10px] font-bold whitespace-nowrap">Full Paid</span>
+                  </div>
+                </div>
+                <div class="rounded-xl border border-line bg-mist/40 p-3.5">
+                  <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-center gap-3 min-w-0">
+                      <span class="h-9 w-9 shrink-0 rounded-full bg-danger/10 text-danger grid place-items-center text-xs font-bold">FB</span>
+                      <div class="min-w-0">
+                        <p class="font-semibold text-navy-dark truncate">Fashola Bisola</p>
+                        <p class="text-[11px] text-slate-500">NV/2025/1111 · Nursery 2 Rose</p>
+                      </div>
+                    </div>
+                    <span class="inline-flex rounded-full bg-danger/10 text-danger px-2 py-1 text-[10px] font-bold whitespace-nowrap">Pending</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="table-desktop mt-4 overflow-x-auto">
+                <table class="min-w-full text-sm">
+                  <thead>
+                    <tr class="border-y border-line bg-mist/80 text-left text-[11px] uppercase tracking-wider text-slate-500">
+                      <th class="px-5 py-3 font-bold">Student</th>
+                      <th class="px-3 py-3 font-bold">Adm No</th>
+                      <th class="px-3 py-3 font-bold">Class</th>
+                      <th class="px-5 py-3 font-bold">Tuition</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-line">
+                    <tr class="hover:bg-mist/60">
+                      <td class="px-5 py-3">
+                        <div class="flex items-center gap-3">
+                          <span class="h-9 w-9 rounded-full bg-navy/10 text-navy grid place-items-center text-xs font-bold">AO</span>
+                          <div>
+                            <p class="font-semibold text-navy-dark">Adeyemi Oluwaseun</p>
+                            <p class="text-[11px] text-slate-500">Enrolled 3 days ago</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-3 py-3 font-semibold text-slate-700">NV/2025/1108</td>
+                      <td class="px-3 py-3 text-slate-600">SSS 2 · Science</td>
+                      <td class="px-5 py-3"><span class="inline-flex rounded-full bg-success/10 text-success px-2.5 py-1 text-[11px] font-bold">Full Paid</span></td>
+                    </tr>
+                    <tr class="hover:bg-mist/60">
+                      <td class="px-5 py-3">
+                        <div class="flex items-center gap-3">
+                          <span class="h-9 w-9 rounded-full bg-bright/10 text-bright grid place-items-center text-xs font-bold">CB</span>
+                          <div>
+                            <p class="font-semibold text-navy-dark">Chukwuemeka Blessing</p>
+                            <p class="text-[11px] text-slate-500">Enrolled 5 days ago</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-3 py-3 font-semibold text-slate-700">NV/2025/1109</td>
+                      <td class="px-3 py-3 text-slate-600">Primary 5 · Diamond</td>
+                      <td class="px-5 py-3"><span class="inline-flex rounded-full bg-gold/15 text-gold-deep px-2.5 py-1 text-[11px] font-bold">50% Part-Pay</span></td>
+                    </tr>
+                    <tr class="hover:bg-mist/60">
+                      <td class="px-5 py-3">
+                        <div class="flex items-center gap-3">
+                          <span class="h-9 w-9 rounded-full bg-success/10 text-success grid place-items-center text-xs font-bold">TI</span>
+                          <div>
+                            <p class="font-semibold text-navy-dark">Tijani Ibrahim O.</p>
+                            <p class="text-[11px] text-slate-500">Enrolled 1 week ago</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-3 py-3 font-semibold text-slate-700">NV/2025/1110</td>
+                      <td class="px-3 py-3 text-slate-600">JSS 1 · Pearl</td>
+                      <td class="px-5 py-3"><span class="inline-flex rounded-full bg-success/10 text-success px-2.5 py-1 text-[11px] font-bold">Full Paid</span></td>
+                    </tr>
+                    <tr class="hover:bg-mist/60">
+                      <td class="px-5 py-3">
+                        <div class="flex items-center gap-3">
+                          <span class="h-9 w-9 rounded-full bg-danger/10 text-danger grid place-items-center text-xs font-bold">FB</span>
+                          <div>
+                            <p class="font-semibold text-navy-dark">Fashola Bisola</p>
+                            <p class="text-[11px] text-slate-500">Enrolled 1 week ago</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-3 py-3 font-semibold text-slate-700">NV/2025/1111</td>
+                      <td class="px-3 py-3 text-slate-600">Nursery 2 · Rose</td>
+                      <td class="px-5 py-3"><span class="inline-flex rounded-full bg-danger/10 text-danger px-2.5 py-1 text-[11px] font-bold">Pending</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="px-4 sm:px-5 py-3 border-t border-line flex items-center justify-between gap-2 text-xs text-slate-500">
+                <span>Showing 4 of 842 enrolled</span>
+                <a href="#students" class="font-bold text-bright hover:text-navy whitespace-nowrap">Open register →</a>
+              </div>
+            </article>
+          </div>
+
+          <!-- Right column -->
+          <div class="xl:col-span-4 space-y-4 sm:space-y-5">
+            <article class="card p-4 sm:p-5">
+              <div class="flex items-center justify-between gap-2">
+                <h2 class="font-display text-lg font-semibold text-navy-deep">Daily Attendance</h2>
+                <span class="text-[11px] font-semibold text-slate-500">Oct 16 · 08:00</span>
+              </div>
+              <div class="mt-5 flex items-center gap-4 sm:gap-5">
+                <div class="attendance-ring" style="--pct: 96.2" aria-hidden="true">
+                  <div class="text-center">
+                    <p class="font-display text-2xl font-semibold text-navy-deep">96.2%</p>
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Present</p>
+                  </div>
+                </div>
+                <div class="space-y-2 text-sm">
+                  <p><span class="font-bold text-navy-deep">810</span> <span class="text-slate-500">Present</span></p>
+                  <p><span class="font-bold text-danger">32</span> <span class="text-slate-500">Absent</span></p>
+                  <p><span class="font-bold text-gold-deep">0</span> <span class="text-slate-500">Late gate</span></p>
+                </div>
+              </div>
+              <p class="mt-4 text-[11px] text-slate-500">Biometric gate scan · Campus-wide roll</p>
+            </article>
+
+            <article id="calendar" class="card p-4 sm:p-5">
+              <div class="flex items-center justify-between gap-2">
+                <h2 class="font-display text-lg font-semibold text-navy-deep">Term 1 Events</h2>
+                <button type="button" class="text-xs font-bold text-bright hover:text-navy">Full diary</button>
+              </div>
+              <ul class="mt-4 space-y-3" id="eventsList">
+                <li class="flex gap-3">
+                  <div class="w-12 shrink-0 rounded-lg bg-navy text-white text-center py-1.5">
+                    <p class="text-[9px] font-bold uppercase tracking-wider opacity-80">Oct</p>
+                    <p class="font-display text-lg leading-none font-semibold">24</p>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-sm font-bold text-navy-dark">Annual Cultural Day &amp; Heritage Fair</p>
+                    <p class="text-[11px] text-slate-500 mt-0.5">Campus Auditorium · 10:00 AM</p>
+                  </div>
+                </li>
+                <li class="flex gap-3">
+                  <div class="w-12 shrink-0 rounded-lg bg-bright text-white text-center py-1.5">
+                    <p class="text-[9px] font-bold uppercase tracking-wider opacity-80">Nov</p>
+                    <p class="font-display text-lg leading-none font-semibold">12</p>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-sm font-bold text-navy-dark">Continuous Assessment 2 (CBT Hall)</p>
+                    <p class="text-[11px] text-slate-500 mt-0.5">College · 4 batches · 250 terminals</p>
+                  </div>
+                </li>
+                <li class="flex gap-3">
+                  <div class="w-12 shrink-0 rounded-lg bg-gold text-navy-dark text-center py-1.5">
+                    <p class="text-[9px] font-bold uppercase tracking-wider opacity-80">Nov</p>
+                    <p class="font-display text-lg leading-none font-semibold">28</p>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-sm font-bold text-navy-dark">Inter-House Sports Heat Trials</p>
+                    <p class="text-[11px] text-slate-500 mt-0.5">Sports Complex Track</p>
+                  </div>
+                </li>
+              </ul>
+            </article>
+
+            <article id="notices" class="card p-4 sm:p-5">
+              <div class="flex items-center justify-between gap-2">
+                <h2 class="font-display text-lg font-semibold text-navy-deep">Administrative Notices</h2>
+                <span class="text-[11px] font-semibold text-slate-500">Lagos Office</span>
+              </div>
+              <ul class="mt-4 space-y-3" id="noticesList">
+                <li class="rounded-lg border border-line bg-mist px-3.5 py-3">
+                  <div class="flex items-start justify-between gap-2">
+                    <p class="text-sm font-bold text-navy-dark">Result PIN Batch NV-25-T1</p>
+                    <span class="text-[10px] font-bold text-slate-400 whitespace-nowrap">Today, 09:15</span>
+                  </div>
+                  <p class="mt-1 text-xs text-slate-600 leading-relaxed">800 scratch PINs generated for terminal report cards. Dispatched to parents via SMS.</p>
+                </li>
+                <li class="rounded-lg border border-line bg-mist px-3.5 py-3">
+                  <div class="flex items-start justify-between gap-2">
+                    <p class="text-sm font-bold text-navy-dark">Lagos Ministry Quality Assurance</p>
+                    <span class="text-[10px] font-bold text-slate-400 whitespace-nowrap">Yesterday</span>
+                  </div>
+                  <p class="mt-1 text-xs text-slate-600 leading-relaxed">Routine inspection window confirmed for College campus CBT accreditation refresh.</p>
+                </li>
+              </ul>
+              <button type="button" id="broadcastNotice" class="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-lg border border-dashed border-navy/30 bg-white px-3 py-2.5 text-sm font-bold text-navy hover:bg-navy/5 transition">
+                Broadcast New Notice
+              </button>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
